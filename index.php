@@ -1,7 +1,13 @@
 <?php
-if (!empty($_POST['login']) && !empty($_POST['password'])) {
-    setcookie($_POST['login'], 'Cookie modifié', time() + 365 * 24 * 3600, null, null, false);
-    setcookie($_POST['password'], 'b', time() + 365 * 24 * 3600, null, null, false);
+// modificatio des valeur du cookie login
+if (!empty($_POST['login'])) {
+    $login = $_POST['login'];
+    setcookie('login', $login, time() + (86400 * 30));
+}
+// modification des valeur du cookie password
+if (!empty($_POST['password'])) {
+    $password = $_POST['password'];
+    setcookie('password', $password, time() + (86400 * 30));
 }
 ?>
 <!DOCTYPE html>
@@ -17,10 +23,22 @@ if (!empty($_POST['login']) && !empty($_POST['password'])) {
             <label for="password">Mot de passe</label>
             <input type="text" name="password" id="password" placeholder="Mot de passe"/>
             <input type="submit" name="submit" value="Valider">
+        <?php
+            // post permet de récupérer les données du formulaire
+            if (empty($_POST['login'])) {
+                ?>
+                <p>Login non défini</p>
+            <?php } else { ?>
+                <p>Votre login modifié : <?= $_POST['login']; ?></p>
+            <?php } ?>
+            <?php
+            // post permet de récupérer les données du formulaire
+            if (empty($_POST['password'])) {
+                ?>
+                <p>Mot de passe non défini</p>
+            <?php } else { ?>
+                <p>Votre mot de passe modifié : <?= $_POST['password']; ?></p>
+        <?php } ?>
         </form>
-        <?php if (!empty($_POST['login'])) { ?>
-            <p>L'identifiant est <?= $_COOKIE['login']; ?></p>
-        <?php } if (!empty($_POST['password'])) { ?>
-        <p>Le mot de passe est <?= $_COOKIE['password']; } ?></p>
     </body>
 </html>
